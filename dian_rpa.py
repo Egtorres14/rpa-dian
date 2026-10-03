@@ -71,13 +71,42 @@ class DescargaInvalida(RuntimeError):
     """Respuesta de descarga incompleta o distinta de PDF; admite reintento acotado."""
 
 
-def obtener_clave(pedir: bool = False) -> str:
-    """Lee la credencial en memoria, sin argumento visible ni archivo de configuración."""
+def clave_del_archivo(path: Path) -> str:
+    """Lee sólo TWOCAPTCHA_API_KEY; no interpreta código ni expande variables."""
+    try:
+        lines = path.read_text(encoding="utf-8-sig").splitlines()
+    except (OSError, UnicodeError):
+        raise CaptchaError("No se pudo leer el archivo de clave en UTF-8.") from None
+    values = []
+    for line in lines:
+        name, separator, value = line.partition("=")
+        if not separator or name.strip() != "TWOCAPTCHA_API_KEY":
+            continue
+        value = value.strip()
+        if value.startswith(("'", '"')):
+            if len(value) < 2 or value[-1] != value[0]:
+                raise CaptchaError("Comillas incompletas en el archivo de clave.")
+            value = value[1:-1].strip()
+        values.append(value)
+    if len(values) != 1 or not values[0]:
+        raise CaptchaError("El archivo debe contener una única TWOCAPTCHA_API_KEY con valor.")
+    return values[0]
+
+
+def obtener_clave(pedir: bool = False, env_file: Path | None = None) -> str:
+    """Prioridad: entrada oculta, variable de entorno y archivo local .env."""
     if pedir:
         if not sys.stdin.isatty():
             raise CaptchaError("--pedir-clave necesita una terminal interactiva; en servidores usa TWOCAPTCHA_API_KEY.")
         return getpass.getpass("Clave de 2Captcha (entrada oculta): ").strip()
-    return os.environ.get("TWOCAPTCHA_API_KEY", "").strip()
+    if key := os.environ.get("TWOCAPTCHA_API_KEY", "").strip():
+        return key
+    path = env_file if env_file is not None else BASE / ".env"
+    if path.is_file():
+        return clave_del_archivo(path)
+    if env_file is not None:
+        raise CaptchaError("No existe el archivo indicado con --env-file.")
+    return ""
 
 
 def leer_cufes(path: Path, nit: str = "", sin_nit: bool = False) -> list[dict[str, str]]:
@@ -774,6 +803,7 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     check = sub.add_parser("verificar-captcha", help="comprueba clave y saldo positivo sin crear tareas ni gastar CAPTCHA")
     check.add_argument("--pedir-clave", action="store_true", help="introduce la clave con entrada oculta")
+    check.add_argument("--env-file", type=Path, help="archivo de clave; por defecto .env junto al programa")
     for name, help_text in (("dian", "consulta la DIAN, descarga los PDF y extrae los datos"),
                             ("extraer", "sólo la parte 2: extrae datos de PDF ya descargados")):
         p = sub.add_parser(name, help=help_text)
@@ -807,6 +837,7 @@ def main() -> int:
                             "2Captcha. gratis: widget con intervención si hace falta, nunca paga. "
                             "widget: sólo token automático sin pagar. manual: diagnóstico asistido")
         p.add_argument("--pedir-clave", action="store_true", help="introduce la clave de 2Captcha con entrada oculta")
+        p.add_argument("--env-file", type=Path, help="archivo de clave; por defecto .env junto al programa")
         p.add_argument("--captcha-wait", type=float, help="espera inicial del widget: auto 8, gratis 2, widget 15, manual 180 segundos")
         p.add_argument("--captcha-timeout", type=int, default=180)
         p.add_argument("--max-captcha-tasks", type=int, default=25)
@@ -822,7 +853,7 @@ def main() -> int:
     args = parser.parse_args()
     if args.command == "verificar-captcha":
         try:
-            key = obtener_clave(args.pedir_clave)
+            key = obtener_clave(args.pedir_clave, args.env_file)
             if not key:
                 raise CaptchaError("Configura TWOCAPTCHA_API_KEY o usa --pedir-clave.")
             start = time.perf_counter()
@@ -883,7 +914,7 @@ def main() -> int:
         if args.pedir_clave and args.captcha not in ("2captcha", "auto"):
             parser.error("--pedir-clave sólo se usa con --captcha 2captcha o auto.")
         try:
-            args.captcha_key = obtener_clave(args.pedir_clave) if args.captcha in ("2captcha", "auto") else ""
+            args.captcha_key = obtener_clave(args.pedir_clave, args.env_file) if args.captcha in ("2captcha", "auto") else ""
         except CaptchaError as exc:
             parser.error(str(exc))
         has_key = bool(args.captcha_key)

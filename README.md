@@ -91,8 +91,11 @@ consulta el saldo sin crear tareas CAPTCHA. Para procesar las diez facturas,
 quita `--limite 1`. El robot resuelve por separado el CAPTCHA de búsqueda y el
 de descarga, acepta el aviso de contraseña y valida el PDF recibido.
 
-También acepta `TWOCAPTCHA_API_KEY` como variable de entorno. `.env.example`
-documenta esa variable, pero el programa no carga archivos `.env` automáticamente.
+También acepta `TWOCAPTCHA_API_KEY` como variable de entorno o desde `.env`
+junto al programa. Puedes copiar `.env.example` a `.env` y sustituir el marcador.
+Para otro archivo usa `--env-file RUTA`. La prioridad es entrada oculta,
+variable de entorno y archivo local. El archivo sólo lee esa clave; no ejecuta
+código ni expande variables. `.env` está excluido de Git.
 Al ejecutar una copia local, cada evaluador usa su propia clave. Para utilizar
 el saldo de evaluación, solicita una prueba desde GitHub como se explica arriba.
 Clonar el repositorio no descarga los secretos de Actions.
@@ -196,9 +199,9 @@ python -m unittest discover -s tests -v
 python generar_informe.py --resultados docs/metricas --destino entrega --repositorio https://github.com/Egtorres14/rpa-dian --optimizacion docs/metricas/optimizacion_tiempos.json --modalidades docs/evidencia_modalidades.json
 ```
 
-Las veinticuatro pruebas verifican la descarga con dos CAPTCHA y CSRF, archivos
+Las veintiocho pruebas verifican la descarga con dos CAPTCHA y CSRF, archivos
 inválidos, extracción de tablas, concurrencia, caché, solicitudes de GitHub,
-resultados incompletos y protección de credenciales.
+resultados incompletos, configuración local y protección de credenciales.
 Usan un portal controlado, Chromium y Tesseract, sin consultar DIAN ni gastar saldo.
 
 El [informe de la prueba técnica](docs/INFORME_PRUEBA_TECNICA.pdf) contiene las

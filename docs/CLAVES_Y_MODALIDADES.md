@@ -11,6 +11,10 @@ python dian_rpa.py dian --captcha 2captcha --pedir-clave --out resultados_pago
 La terminal pide la clave con entrada oculta. La clave queda en memoria del
 proceso; no se guarda en un archivo ni en el historial como argumento. Si ya
 está configurada `TWOCAPTCHA_API_KEY`, se puede omitir `--pedir-clave`.
+También se admite un `.env` local junto al programa o `--env-file RUTA`.
+La entrada oculta tiene prioridad sobre la variable de entorno; la variable
+tiene prioridad sobre el archivo. Se lee sólo esa clave sin modificar el
+entorno global. El archivo es texto plano y debe mantenerse fuera de Git.
 
 Gratuito, widget y ayuda de la persona cuando sea necesaria:
 
