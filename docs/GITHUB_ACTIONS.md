@@ -6,6 +6,11 @@ nombre `TWOCAPTCHA_API_KEY`. El proyecto descargable incluye el flujo que la
 utiliza, pero no contiene su valor. Para una ejecución local se necesita
 una clave propia o la modalidad gratuita.
 
+**Estado comprobado:** la demo de OCR completó diez archivos en el runner de
+GitHub. La consulta real fue bloqueada por DIAN/Cloudflare antes de crear una
+tarea CAPTCHA. La descarga remota se mantiene como opción experimental; la
+entrega para evaluar la consulta y descarga usa la ejecución local.
+
 ## Para quien evalúa
 
 1. Inicia sesión en GitHub y abre una
@@ -13,8 +18,9 @@ una clave propia o la modalidad gratuita.
 2. Elige una o diez facturas y publica la solicitud. No introduzcas credenciales.
 3. La ejecución espera la aprobación de Gabriel. Tras la aprobación, revisa
    [Actions](https://github.com/Egtorres14/rpa-dian/actions/workflows/evaluacion.yml).
-4. Abre la ejecución del evento `issues` y descarga **resultados** en la sección
-   **Artifacts**. El ZIP interior contiene los PDF, CSV y métricas.
+4. Si la ejecución termina correctamente, descarga **resultados** en la sección
+   **Artifacts**. El ZIP interior contiene los PDF, CSV y métricas. Si DIAN
+   bloquea el runner, la ejecución falla sin publicar un lote incompleto.
 
 Leer un repositorio público no concede permiso para pulsar **Run workflow**.
 El formulario permite solicitar la prueba sin recibir acceso de escritura.
@@ -62,6 +68,19 @@ El resumen muestra el tiempo del robot y OCR, las tareas CAPTCHA y el coste
 reportado. Excluye instalación, aprobación y espera en cola. El rendimiento del
 runner de GitHub puede diferir del equipo donde se tomaron las mediciones del
 informe, y la disponibilidad de DIAN o 2Captcha puede afectar una descarga.
+
+La [demo comprobada](https://github.com/Egtorres14/rpa-dian/actions/runs/37097879155)
+empleó 53,666 s de RPA/OCR: diez PDF y CSV, 21 productos, siete `OK`, tres
+`REVISAR`, sin errores ni tareas de pago. Además del código ausente en la fuente,
+el OCR produjo discrepancias en `SFA-556956` y `HISF-277602` (por ejemplo,
+`S19911` se leyó como `$19911`). Se conservaron para revisión sin sustituirlos
+por la capa nativa del PDF. Son resultados de Ubuntu, distintos de la medición
+original en Windows.
+
+La [consulta de una factura](https://github.com/Egtorres14/rpa-dian/actions/runs/37098192997)
+falló por bloqueo del sitio tras 1,552 s, con cero PDF y cero tareas CAPTCHA.
+La clave y el saldo se habían verificado correctamente. Resolver el widget
+Turnstile no garantiza acceso desde una IP bloqueada por el sitio.
 
 ## Cuando termine el proceso
 

@@ -9,15 +9,22 @@ El lote de evaluación contiene diez facturas. Según el enunciado, los datos so
 ficticios y los resultados tienen fines exclusivamente evaluativos, sin uso
 comercial ni compensación económica. El plazo de la prueba es de 24 horas.
 
-## Probar desde GitHub sin instalar nada
+## Opciones de ejecución desde GitHub
+
+La descarga desde DIAN se comprobó localmente. En la prueba del runner de
+GitHub, el sitio bloqueó la consulta antes de crear tareas CAPTCHA. Para
+evaluar una descarga nueva, utiliza la instalación local y una clave válida.
+La demo de OCR sí completó las diez muestras en GitHub, con observaciones
+adicionales respecto a Windows que quedan registradas en las métricas.
 
 Abre una [solicitud de evaluación](https://github.com/Egtorres14/rpa-dian/issues/new?template=evaluacion.yml)
 y elige una o diez facturas. La solicitud inicia el flujo de Actions y espera
-mi aprobación antes de usar el saldo de 2Captcha. No necesitas una API key.
+mi aprobación antes de usar el saldo de 2Captcha. Es un canal experimental:
+la descarga depende de que DIAN permita la conexión desde ese runner.
 
 Una vez aprobado, busca la ejecución correspondiente en
 [Actions](https://github.com/Egtorres14/rpa-dian/actions/workflows/evaluacion.yml)
-y descarga el artefacto **resultados**. Incluye PDF, CSV por factura, consolidado
+y, si se completa, descarga el artefacto **resultados**. Incluye PDF, CSV por factura, consolidado
 y métricas. Los resultados son públicos y el artefacto se conserva siete días.
 
 Como propietario, también puedo iniciar la modalidad `demo` o `dian` con
@@ -96,8 +103,9 @@ junto al programa. Puedes copiar `.env.example` a `.env` y sustituir el marcador
 Para otro archivo usa `--env-file RUTA`. La prioridad es entrada oculta,
 variable de entorno y archivo local. El archivo sólo lee esa clave; no ejecuta
 código ni expande variables. `.env` está excluido de Git.
-Al ejecutar una copia local, cada evaluador usa su propia clave. Para utilizar
-el saldo de evaluación, solicita una prueba desde GitHub como se explica arriba.
+Al ejecutar una copia local desde GitHub, cada evaluador configura una clave.
+El paquete enviado directamente al equipo evaluador puede incluir un `.env`
+privado; ese archivo no forma parte del repositorio público.
 Clonar el repositorio no descarga los secretos de Actions.
 
 ### Opción gratuita con asistencia
