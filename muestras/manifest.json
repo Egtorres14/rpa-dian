@@ -1,0 +1,52 @@
+[
+  {
+    "archivo": "factura_01_eccc372e4bdb.pdf",
+    "cufe": "eccc372e4bdb8125cf2e896b405ddb91918c7c6d92238892e3b36bd3b6a86929a3c47ed18ae8f559a1bf51b89ab560f1",
+    "sha256": "0d7c73997fb53ca918829b807627987f4ab9a9472546852802c0a95e0e25a2a2"
+  },
+  {
+    "archivo": "factura_02_8e7b821b4644.pdf",
+    "cufe": "8e7b821b46445807245ad6c223d6a054923cea3e5dc59983e55a40cfeac2a4f570eccb198446b27d15c8d834c2e2ced9",
+    "sha256": "539aefc5760e8b1f263518496b2d42afa54092a052a361ced9d5d0c2284336fc"
+  },
+  {
+    "archivo": "factura_03_6a7ec741dd95.pdf",
+    "cufe": "6a7ec741dd95ff7f5240481b3ed287f85eea3b665a8b26b91b376095f9bb134d2397ec96586fd16e116ef247a6506770",
+    "sha256": "5f92c8c844a328f21eb2881ce35af7f8701368d99facf705f5a4a0219b81bac1"
+  },
+  {
+    "archivo": "factura_04_c2e740942c19.pdf",
+    "cufe": "c2e740942c1925d57f2e82254f21992cbad461a0df57fd42a1475fbe71ba5ab68a824c03487cbc19e80c50e436dd30fe",
+    "sha256": "777a9f05d49f672631715adaf383c253b435ef54b282c9256b6696d965e4e560"
+  },
+  {
+    "archivo": "factura_05_3e6331e537f0.pdf",
+    "cufe": "3e6331e537f08a54ec2d9f38904afaae80b16ffa502a12fd9aba388048d50d76b311809be9236aaa1bd1cc781a9d87f3",
+    "sha256": "68460a8bdb1a2bba7c4dd74355c8f5bb5ffd0e88f710f243e93760491ac3eeb9"
+  },
+  {
+    "archivo": "factura_06_f639eb72baf2.pdf",
+    "cufe": "f639eb72baf2e301eddde8e8e5087295831a12c781d4cf6b4671932cdfa3599223aa3375af807a1f5d66aa1543c9fb91",
+    "sha256": "ce3e7f7848bab0d3c6affa62443c5638ac1c4f40a774de42d0fbc37da8fd393c"
+  },
+  {
+    "archivo": "factura_07_2a90ab2ce6b5.pdf",
+    "cufe": "2a90ab2ce6b54e505fc9f463bffb528244abef80d9ab1a9a39d771169c7cfe52b9a48b6feab1fdceb8b4b59ff6e319db",
+    "sha256": "4e47829da7ee49f7bf7940d688eded6bc2ffcca2c5e715755ab44853de3b956b"
+  },
+  {
+    "archivo": "factura_08_341a447c4891.pdf",
+    "cufe": "341a447c4891f8e302771bf6a6d95d7011e72d44a8cb670356cbb5e92549824eb0071c542261d837978cfd351d2131d1",
+    "sha256": "c8ce2671c60b082180998c110daa27a6a921a04c635565d3fdca09c135278951"
+  },
+  {
+    "archivo": "factura_09_bbed883f8030.pdf",
+    "cufe": "bbed883f80308e0e0e16e52a1286d71274b1a78419875458c590fcec41c065eda762aaef478775dc219de3c5e2d6400b",
+    "sha256": "ce2a2e93674c47a21726ca4580a3e56f92f89225a308f415a9c3ca3091e49410"
+  },
+  {
+    "archivo": "factura_10_70d1aab6f793.pdf",
+    "cufe": "70d1aab6f793d4fc7151d69400138cf1bd147e54aaeaf274072898f9d12d979e86e8de79fef27668896db76589323ad0",
+    "sha256": "d04afcb00a21544f4c527c346896d1438115cce1c5b86a7b48d53f0912588da1"
+  }
+]

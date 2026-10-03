@@ -1,0 +1,86 @@
+{
+  "metodo": "Mismo equipo y mismos diez PDF; ejecuciones consecutivas sin benchmarks simultáneos.",
+  "equipo": {
+    "nucleos_fisicos": 8,
+    "nucleos_logicos": 16
+  },
+  "benchmark_local": {
+    "antes_s": 105.355,
+    "despues_s": 70.335,
+    "ahorro_s": 35.02,
+    "reduccion_pct": 33.24,
+    "ocr_antes_s": 77.051,
+    "ocr_despues_s": 37.855,
+    "csv_identicos": 10,
+    "filas_productos": 21,
+    "campos_presentes": 113,
+    "campos_esperados": 114,
+    "campos_comparados": 113,
+    "concordancia_pct": 100.0,
+    "dpi": 400,
+    "ocr_workers": 4,
+    "tesseract_hilos_por_proceso": 1,
+    "antes_inicio_utc": "2026-10-03T02:51:34+00:00",
+    "despues_inicio_utc": "2026-10-03T03:01:11+00:00"
+  },
+  "verificacion_csv": [
+    {
+      "archivo": "factura_01_eccc372e4bdb.csv",
+      "sha256_csv": "39456aa7c6c6682c39c584d49ec4d2702217972a20552648e5ab48f708cac88c"
+    },
+    {
+      "archivo": "factura_02_8e7b821b4644.csv",
+      "sha256_csv": "6493d81118d8e38a6729a1191f292622e579e3a1072f5cb2745af3235c5c8b3e"
+    },
+    {
+      "archivo": "factura_03_6a7ec741dd95.csv",
+      "sha256_csv": "ad683622972b481800a4a9be107116f5f1c214c1ab383123ee7f970f1aa2cfe1"
+    },
+    {
+      "archivo": "factura_04_c2e740942c19.csv",
+      "sha256_csv": "1ed76960b90b70651e4736b545b51011c7976544a29a39643a710b2ac111a095"
+    },
+    {
+      "archivo": "factura_05_3e6331e537f0.csv",
+      "sha256_csv": "1a555cb29913b94ad018e5158a2734ce35a976d378ae3cb5486fa415e8462b8d"
+    },
+    {
+      "archivo": "factura_06_f639eb72baf2.csv",
+      "sha256_csv": "cb9ad8b8143fd75f4d8e8b4cf629b9007b978af601d67674e1aceaadfc7df46c"
+    },
+    {
+      "archivo": "factura_07_2a90ab2ce6b5.csv",
+      "sha256_csv": "1d8ce16c250e97839b1142ac1d707dae8f7499ba0101c7dfe005345e33e08d72"
+    },
+    {
+      "archivo": "factura_08_341a447c4891.csv",
+      "sha256_csv": "1cb61034ef4e5031e7ba67c12949887166090e604ec8be0c3b9c25370e0fa4bb"
+    },
+    {
+      "archivo": "factura_09_bbed883f8030.csv",
+      "sha256_csv": "50f3dc88020c1947a1c0ebf366c8ac06eec038da67238abfeba27442ff5c223e"
+    },
+    {
+      "archivo": "factura_10_70d1aab6f793.csv",
+      "sha256_csv": "282355c976e8c15884f27a214fab26c35612aeee2643a568980f8ed2753f69b8"
+    }
+  ],
+  "limitaciones": "Mediciones individuales. El ahorro total depende además de la latencia variable de 2Captcha. La confianza OCR no es una precisión anotada por humanos. La RAM de procesos Tesseract se excluye de tracemalloc.",
+  "prueba_solo_omp_1_s": 106.886,
+  "flujo_dian": {
+    "antes_s": 377.952,
+    "despues_s": 322.119,
+    "ahorro_s": 55.833,
+    "reduccion_pct": 14.77,
+    "captcha_antes_s": 189.803,
+    "captcha_despues_s": 195.291,
+    "captcha_tareas_antes": 20,
+    "captcha_tareas_despues": 20,
+    "coste_despues_usd": "0.02900",
+    "pausa_antes_s": 5,
+    "pausa_despues_s": 1.0,
+    "antes_inicio_utc": "2026-10-03T01:53:38+00:00",
+    "despues_inicio_utc": "2026-10-03T03:04:12+00:00",
+    "csv_identicos_a_referencia_local": 10
+  }
+}
