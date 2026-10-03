@@ -1,0 +1,46 @@
+name: Diagnóstico de acceso DIAN
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceso:
+    if: github.actor == github.repository_owner && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Instalar navegador
+        run: |
+          python -m pip install playwright==1.58.0
+          python -m playwright install --with-deps chromium
+      - name: Comparar modos sin enviar CUFE ni pagar CAPTCHA
+        run: |
+          xvfb-run -a python - <<'PY'
+          import json, re, time
+          from playwright.sync_api import sync_playwright
+          pattern = re.compile(r'solicitud bloqueada|access denied|checking your browser|just a moment|attention required|you have been blocked', re.I)
+          with sync_playwright() as pw:
+              for headless in (True, False):
+                  browser = pw.chromium.launch(headless=headless)
+                  context = browser.new_context(locale='es-CO', viewport={'width':1366,'height':900})
+                  page = context.new_page()
+                  response = page.goto('https://catalogo-vpfe.dian.gov.co/User/SearchDocument', wait_until='domcontentloaded')
+                  for seconds in (0, 5, 15, 30):
+                      if seconds:
+                          page.wait_for_timeout((seconds - previous) * 1000)
+                      match = pattern.search(page.locator('body').inner_text())
+                      print(json.dumps({'headless':headless, 'segundos':seconds, 'http_inicial':response.status,
+                          'titulo':page.title(), 'coincidencia':match.group(0) if match else None,
+                          'formulario':page.locator('#DocumentKey').count()}, ensure_ascii=False), flush=True)
+                      previous = seconds
+                  browser.close()
+          PY
