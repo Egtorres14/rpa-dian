@@ -1,0 +1,23 @@
+name: Probar la descarga y el OCR
+description: Solicitar una ejecución del lote DIAN con el saldo de evaluación.
+title: "Prueba del RPA DIAN"
+labels: [evaluacion-rpa]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        La solicitud inicia una ejecución en Actions que espera la aprobación de Gabriel.
+        Después de aprobarla, se publican PDF, CSV y métricas en el artefacto de esa ejecución.
+        No necesitas instalar Python ni introducir una API key. Los resultados son públicos.
+        También puedes probar gratis el OCR local: sigue la demo del README.
+  - type: dropdown
+    id: facturas
+    attributes:
+      label: Facturas
+      description: Se consultan los primeros CUFE del lote incluido en el proyecto.
+      options:
+        - "1"
+        - "10"
+      default: 0
+    validations:
+      required: true

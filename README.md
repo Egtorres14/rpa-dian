@@ -9,6 +9,26 @@ El lote de evaluación contiene diez facturas. Según el enunciado, los datos so
 ficticios y los resultados tienen fines exclusivamente evaluativos, sin uso
 comercial ni compensación económica. El plazo de la prueba es de 24 horas.
 
+## Probar desde GitHub sin instalar nada
+
+Abre una [solicitud de evaluación](https://github.com/Egtorres14/rpa-dian/issues/new?template=evaluacion.yml)
+y elige una o diez facturas. La solicitud inicia el flujo de Actions y espera
+mi aprobación antes de usar el saldo de 2Captcha. No necesitas una API key.
+
+Una vez aprobado, busca la ejecución correspondiente en
+[Actions](https://github.com/Egtorres14/rpa-dian/actions/workflows/evaluacion.yml)
+y descarga el artefacto **resultados**. Incluye PDF, CSV por factura, consolidado
+y métricas. Los resultados son públicos y el artefacto se conserva siete días.
+
+Como propietario, también puedo iniciar la modalidad `demo` o `dian` con
+**Run workflow** en la rama `main`. La demo procesa las diez muestras sin gastar
+saldo. La descarga nueva usa el secreto `TWOCAPTCHA_API_KEY` del entorno
+`evaluacion`; la clave no se incluye en el código ni en el ZIP de resultados.
+
+El flujo acepta únicamente el lote incluido y un intento por factura, con
+un máximo de dos tareas CAPTCHA por factura. Los tiempos del robot excluyen
+instalación, cola y aprobación. [Configuración y cierre de la evaluación](docs/GITHUB_ACTIONS.md).
+
 ## Instalación
 
 Probado en Windows con Python 3.12.10. Desde PowerShell:
@@ -73,8 +93,9 @@ de descarga, acepta el aviso de contraseña y valida el PDF recibido.
 
 También acepta `TWOCAPTCHA_API_KEY` como variable de entorno. `.env.example`
 documenta esa variable, pero el programa no carga archivos `.env` automáticamente.
-Cada evaluador puede usar su propia clave. El repositorio no incluye credenciales
-ni configura una ejecución remota con el saldo del propietario.
+Al ejecutar una copia local, cada evaluador usa su propia clave. Para utilizar
+el saldo de evaluación, solicita una prueba desde GitHub como se explica arriba.
+Clonar el repositorio no descarga los secretos de Actions.
 
 ### Opción gratuita con asistencia
 
@@ -175,8 +196,9 @@ python -m unittest discover -s tests -v
 python generar_informe.py --resultados docs/metricas --destino entrega --repositorio https://github.com/Egtorres14/rpa-dian --optimizacion docs/metricas/optimizacion_tiempos.json --modalidades docs/evidencia_modalidades.json
 ```
 
-Las dieciocho pruebas verifican la descarga con dos CAPTCHA y CSRF, archivos
-inválidos, extracción de tablas, concurrencia, caché y protección de credenciales.
+Las veinticuatro pruebas verifican la descarga con dos CAPTCHA y CSRF, archivos
+inválidos, extracción de tablas, concurrencia, caché, solicitudes de GitHub,
+resultados incompletos y protección de credenciales.
 Usan un portal controlado, Chromium y Tesseract, sin consultar DIAN ni gastar saldo.
 
 El [informe de la prueba técnica](docs/INFORME_PRUEBA_TECNICA.pdf) contiene las

@@ -6,3 +6,4 @@
 *.txt text eol=lf
 *.pdf binary
 *.png binary
+*.yml text eol=lf

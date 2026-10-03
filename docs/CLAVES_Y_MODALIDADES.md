@@ -84,9 +84,10 @@ ejecutado por el propietario, desde código revisado y con acceso limitado, es
 una opción para esta prueba. No se debe dar permiso de edición del workflow a
 personas sin confianza para permitirles usar el secreto. Los forks no reciben
 los secretos del repositorio original. El evaluador puede revisar los resultados
-sin recibir la API key. Este proyecto está configurado para ejecución local;
-publicar el código no activa el uso compartido de la clave. La ejecución remota
-requiere configurar el servicio y sus controles de acceso por separado.
+sin recibir la API key. Este repositorio tiene un flujo de Actions y un formulario
+de solicitud configurados para esta evaluación. El entorno `evaluacion` guarda
+la clave y exige la aprobación del propietario antes de liberarla al robot.
+La demo no usa ese entorno. [Pasos de uso y cierre](GITHUB_ACTIONS.md).
 
 ## Tiempos y límites
 

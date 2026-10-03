@@ -8,6 +8,7 @@ venv/
 .firecrawl/
 pdfs_dian/
 resultados_*/
+artefactos_github/
 entrega/
 tmp/
 output/

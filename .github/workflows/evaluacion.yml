@@ -1,0 +1,90 @@
+name: Evaluación RPA DIAN
+
+on:
+  workflow_dispatch:
+    inputs:
+      modalidad:
+        description: Demo gratuita de OCR o descarga nueva desde DIAN
+        type: choice
+        options: [demo, dian]
+        default: demo
+        required: true
+      limite:
+        description: Facturas a descargar (la demo procesa las diez muestras)
+        type: choice
+        options: ['1', '10']
+        default: '1'
+        required: true
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evaluacion-rpa
+  cancel-in-progress: false
+
+jobs:
+  demo:
+    if: >-
+      github.event_name == 'workflow_dispatch' && inputs.modalidad == 'demo' &&
+      github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Instalar Python y OCR
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-spa tesseract-ocr-eng
+          python -m pip install -r requirements.txt
+      - name: Procesar las muestras
+        run: python ejecutar_github.py
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: resultados
+          path: artefactos_github/resultados.zip
+          if-no-files-found: error
+          retention-days: 7
+
+  dian:
+    if: >-
+      github.repository == 'Egtorres14/rpa-dian' && !github.event.repository.private &&
+      github.ref == 'refs/heads/main' &&
+      ((github.event_name == 'workflow_dispatch' && inputs.modalidad == 'dian' &&
+        github.actor == github.repository_owner) ||
+       (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'evaluacion-rpa')))
+    environment: evaluacion
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Instalar Python, OCR y Chromium
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-spa tesseract-ocr-eng
+          python -m pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+      - name: Consultar, descargar y extraer
+        env:
+          TWOCAPTCHA_API_KEY: ${{ secrets.TWOCAPTCHA_API_KEY }}
+        run: python ejecutar_github.py
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: resultados
+          path: artefactos_github/resultados.zip
+          if-no-files-found: error
+          retention-days: 7
