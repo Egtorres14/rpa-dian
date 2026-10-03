@@ -9,32 +9,29 @@ El lote de evaluación contiene diez facturas. Según el enunciado, los datos so
 ficticios y los resultados tienen fines exclusivamente evaluativos, sin uso
 comercial ni compensación económica. El plazo de la prueba es de 24 horas.
 
-## Opciones de ejecución desde GitHub
+## Cómo evaluar la entrega
 
-La descarga desde DIAN se comprobó localmente. En la prueba del runner de
-GitHub, el sitio bloqueó la consulta antes de crear tareas CAPTCHA. Para
-evaluar una descarga nueva, utiliza la instalación local y una clave válida.
-La demo de OCR sí completó las diez muestras en GitHub, con observaciones
-adicionales respecto a Windows que quedan registradas en las métricas.
+La opción principal es ejecutar el proyecto localmente. El ZIP enviado al
+equipo evaluador incluye `LEEME_EVALUADOR.md` con la instalación y los comandos,
+y un `.env` privado con la clave facilitada para la prueba. Extrae el ZIP
+completo y sigue esas instrucciones. No necesitas abrir un Issue ni esperar
+una aprobación para ejecutar esa copia.
 
-Abre una [solicitud de evaluación](https://github.com/Egtorres14/rpa-dian/issues/new?template=evaluacion.yml)
-y elige una o diez facturas. La solicitud inicia el flujo de Actions y espera
-mi aprobación antes de usar el saldo de 2Captcha. Es un canal experimental:
-la descarga depende de que DIAN permita la conexión desde ese runner.
+Después de instalar las dependencias, comprueba la clave y prueba una factura:
 
-Una vez aprobado, busca la ejecución correspondiente en
-[Actions](https://github.com/Egtorres14/rpa-dian/actions/workflows/evaluacion.yml)
-y, si se completa, descarga el artefacto **resultados**. Incluye PDF, CSV por factura, consolidado
-y métricas. Los resultados son públicos y el artefacto se conserva siete días.
+```powershell
+python dian_rpa.py verificar-captcha
+python dian_rpa.py dian --captcha 2captcha --limite 1 --out resultados_pago
+```
 
-Como propietario, también puedo iniciar la modalidad `demo` o `dian` con
-**Run workflow** en la rama `main`. La demo procesa las diez muestras sin gastar
-saldo. La descarga nueva usa el secreto `TWOCAPTCHA_API_KEY` del entorno
-`evaluacion`; la clave no se incluye en el código ni en el ZIP de resultados.
+El programa lee `.env` automáticamente. Para las diez facturas, quita
+`--limite 1`. La nueva verificación local descargó y procesó una factura en
+28,447 s, con dos tareas CAPTCHA y coste reportado de USD 0,00290.
 
-El flujo acepta únicamente el lote incluido y un intento por factura, con
-un máximo de dos tareas CAPTCHA por factura. Los tiempos del robot excluyen
-instalación, cola y aprobación. [Configuración y cierre de la evaluación](docs/GITHUB_ACTIONS.md).
+Si descargaste el proyecto desde GitHub, configura tu propia clave como se
+explica abajo. El repositorio público contiene el código, instrucciones y
+muestras; no incluye el `.env` privado de la entrega. También puedes probar
+gratis el OCR con `python dian_rpa.py extraer --demo`.
 
 ## Instalación
 
@@ -77,7 +74,9 @@ instalar las dependencias, funciona sin Internet, navegador ni API key. Permite
 evaluar la extracción; para probar una descarga nueva se usa el comando `dian`.
 Los CSV de referencia están en [muestras/csv](muestras/csv).
 
-**Resultado esperado:** diez archivos procesados, nueve `OK` y uno `REVISAR`.
+**Resultado de referencia en Windows:** diez archivos procesados, nueve `OK`
+y uno `REVISAR`. Otras versiones de Tesseract pueden producir discrepancias
+adicionales, que quedan marcadas para revisión.
 La factura `HTFE-6599` tiene el código de producto vacío en el documento original.
 Se conserva vacío y el programa termina con código de salida `1` para señalar
 la observación. No se completa ese dato por inferencia.
@@ -86,7 +85,9 @@ la observación. No se completa ese dato por inferencia.
 
 ### CAPTCHA automático con 2Captcha
 
-Requiere conexión y una cuenta de 2Captcha con saldo. Para probar una factura:
+Requiere conexión y una clave de 2Captcha con saldo. Si recibiste el ZIP con
+`.env`, usa los comandos del inicio. Para introducir otra clave con entrada
+oculta y probar una factura:
 
 ```powershell
 python dian_rpa.py verificar-captcha --pedir-clave
@@ -228,3 +229,23 @@ python dian_rpa.py dian --help
 `--resume` reutiliza los PDF válidos y vuelve a extraer sus datos. El modo
 `--sin-ocr` lee el texto nativo para diagnóstico; la evaluación de imágenes
 se realiza con el OCR predeterminado.
+
+## GitHub Actions como opción adicional
+
+El flujo de Actions permite al propietario iniciar una demo de OCR con
+**Run workflow**. La demo completó las diez muestras en GitHub/Ubuntu, con
+observaciones adicionales respecto a Windows registradas en las métricas.
+
+La consulta y descarga desde ese runner fue bloqueada por DIAN antes de crear
+tareas CAPTCHA. La ejecución local es la vía comprobada para evaluar una
+descarga nueva. El flujo remoto de pago se conserva como opción experimental.
+
+Una [solicitud por Issue](https://github.com/Egtorres14/rpa-dian/issues/new?template=evaluacion.yml)
+pide ejecutar ese flujo remoto con aprobación del propietario. No pide
+entregar una clave al solicitante y no es un requisito para ejecutar el ZIP.
+Actions utiliza el secreto `TWOCAPTCHA_API_KEY` del entorno `evaluacion`.
+
+Si una ejecución remota se completa, publica PDF, CSV y métricas en el artefacto
+**resultados**, conservado siete días. Acepta una o diez facturas del lote, un
+intento por factura y un máximo de dos tareas CAPTCHA por factura. Los tiempos
+excluyen instalación, cola y aprobación. [Configuración y restricciones](docs/GITHUB_ACTIONS.md).
