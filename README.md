@@ -236,12 +236,15 @@ El flujo de Actions permite al propietario iniciar una demo de OCR con
 **Run workflow**. La demo completó las diez muestras en GitHub/Ubuntu, con
 observaciones adicionales respecto a Windows registradas en las métricas.
 
-La consulta y descarga desde ese runner fue bloqueada por DIAN antes de crear
-tareas CAPTCHA. La ejecución local es la vía comprobada para evaluar una
-descarga nueva. El flujo remoto de pago se conserva como opción experimental.
+La descarga automática también está comprobada en Actions: una factura quedó
+`OK`, con PDF y CSV publicados, en **30,850 s**, dos tareas CAPTCHA y
+**USD 0,00290**. [Ejecución verificada](https://github.com/Egtorres14/rpa-dian/actions/runs/37100081712).
+Chromium se ejecuta con una pantalla virtual mediante Xvfb. La ejecución
+anterior sin ventana recibió HTTP 403; la comprobación con ventana accedió al
+formulario. El lote remoto de diez facturas no se ha vuelto a medir.
 
 Una [solicitud por Issue](https://github.com/Egtorres14/rpa-dian/issues/new?template=evaluacion.yml)
-pide ejecutar ese flujo remoto con aprobación del propietario. No pide
+pide ejecutar el flujo remoto con aprobación del propietario. No pide
 entregar una clave al solicitante y no es un requisito para ejecutar el ZIP.
 Actions utiliza el secreto `TWOCAPTCHA_API_KEY` del entorno `evaluacion`.
 

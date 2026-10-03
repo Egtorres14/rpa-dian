@@ -8,7 +8,7 @@ body:
       value: |
         La solicitud inicia una ejecución en Actions que espera la aprobación de Gabriel.
         Si DIAN permite la conexión, se publican PDF, CSV y métricas en el artefacto de esa ejecución.
-        El runner de GitHub fue bloqueado en la prueba reciente. La descarga comprobada usa ejecución local.
+        La descarga de una factura está comprobada con Chromium y pantalla virtual.
         No necesitas instalar Python ni introducir una API key. Los resultados son públicos.
         También puedes probar gratis el OCR local: sigue la demo del README.
   - type: dropdown

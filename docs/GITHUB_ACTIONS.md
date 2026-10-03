@@ -7,9 +7,9 @@ utiliza, pero no contiene su valor. Para una ejecución local se necesita
 una clave propia o la modalidad gratuita.
 
 **Estado comprobado:** la demo de OCR completó diez archivos en el runner de
-GitHub. La consulta real fue bloqueada por DIAN/Cloudflare antes de crear una
-tarea CAPTCHA. La descarga remota se mantiene como opción experimental; la
-entrega para evaluar la consulta y descarga usa la ejecución local.
+GitHub. La consulta y descarga real de una factura también se completó, con
+PDF, CSV y métricas publicados. La entrega permite ejecución local y remota;
+el ZIP enviado directamente incluye su configuración local.
 
 ## Para quien evalúa
 
@@ -77,10 +77,24 @@ el OCR produjo discrepancias en `SFA-556956` y `HISF-277602` (por ejemplo,
 por la capa nativa del PDF. Son resultados de Ubuntu, distintos de la medición
 original en Windows.
 
-La [consulta de una factura](https://github.com/Egtorres14/rpa-dian/actions/runs/37098192997)
+La [consulta inicial de una factura](https://github.com/Egtorres14/rpa-dian/actions/runs/37098192997)
 falló por bloqueo del sitio tras 1,552 s, con cero PDF y cero tareas CAPTCHA.
-La clave y el saldo se habían verificado correctamente. Resolver el widget
-Turnstile no garantiza acceso desde una IP bloqueada por el sitio.
+La clave y el saldo se habían verificado correctamente.
+
+El [diagnóstico de acceso](https://github.com/Egtorres14/rpa-dian/actions/runs/37099839484)
+comparó ambos modos en el mismo runner, sin enviar CUFE ni crear tareas:
+Chromium sin ventana recibió HTTP 403 y «Solicitud bloqueada» durante 30 s;
+con ventana recibió HTTP 200 y encontró `#DocumentKey`. El flujo de pago ahora
+usa `xvfb-run -a`, una pantalla virtual, y deja de pasar `--headless` al RPA.
+No cambia los selectores, los CAPTCHA del portal ni las validaciones del PDF.
+
+La [prueba posterior con descarga real](https://github.com/Egtorres14/rpa-dian/actions/runs/37100081712)
+completó **una factura OK**, dos páginas y un producto en **30,850 s**, con
+**dos tareas CAPTCHA** y **USD 0,00290**. Publicó el PDF, el CSV por factura,
+el consolidado y las métricas, sin observaciones de OCR. Se comprobó el
+artefacto descargado, no sólo el estado del job. Esta medición corresponde
+a una factura; no es un benchmark remoto del lote de diez. La disponibilidad
+del portal y del proveedor puede cambiar entre ejecuciones.
 
 ## Cuando termine el proceso
 
