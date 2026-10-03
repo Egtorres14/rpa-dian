@@ -133,7 +133,7 @@ def main() -> int:
             balance = json.loads(check.stdout)
             if not balance.get("clave_valida") or not balance.get("saldo_positivo"):
                 raise ValueError("La clave no es válida o no tiene saldo positivo.")
-            command += ["dian", "--captcha", "2captcha", "--headless", "--limite", str(count),
+            command += ["dian", "--captcha", "2captcha", "--limite", str(count),
                         "--attempts", "1", "--max-captcha-tasks", str(2 * count)]
             pdf_dir = output / "pdf"
         else:

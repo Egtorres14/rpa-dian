@@ -75,13 +75,13 @@ jobs:
       - name: Instalar Python, OCR y Chromium
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y tesseract-ocr tesseract-ocr-spa tesseract-ocr-eng
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-spa tesseract-ocr-eng xvfb xauth
           python -m pip install -r requirements.txt
           python -m playwright install --with-deps chromium
       - name: Consultar, descargar y extraer
         env:
           TWOCAPTCHA_API_KEY: ${{ secrets.TWOCAPTCHA_API_KEY }}
-        run: python ejecutar_github.py
+        run: xvfb-run -a python ejecutar_github.py
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: resultados
