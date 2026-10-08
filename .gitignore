@@ -5,15 +5,24 @@ venv/
 .env
 .env.*
 !.env.example
+# Contienen la clave privada de la evaluación: sólo van en el ZIP, nunca en el repositorio.
+LEEME_EVALUADOR.md
+*.docx
 .firecrawl/
 pdfs_dian/
 resultados_*/
 artefactos_github/
 entrega/
+entrega_original/
 tmp/
 output/
 *.log
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/
+# Se comparte la configuración del proyecto para VS Code (tareas, depuración, visor PDF).
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
