@@ -1,0 +1,54 @@
+{
+  // F5: depurar con puntos de interrupción. Las tareas (Ctrl+Shift+B) ejecutan sin depurador.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Nueva · Demo OCR",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/dian_rpa.py",
+      "args": ["extraer", "--demo", "--out", "resultados_demo"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Original · Demo OCR",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/original/dian_rpa.py",
+      "args": ["extraer", "--demo", "--out", "${workspaceFolder}/resultados_original_demo"],
+      "cwd": "${workspaceFolder}/original",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Nueva · DIAN 1 factura (2Captcha)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/dian_rpa.py",
+      "args": ["dian", "--captcha", "2captcha", "--limite", "1", "--attempts", "1",
+               "--max-captcha-tasks", "2", "--out", "resultados_pago"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Ver resultados en PDF (última ejecución)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/ver_resultados.py",
+      "args": ["--abrir"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Archivo Python actual",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "cwd": "${fileDirname}",
+      "console": "integratedTerminal"
+    }
+  ]
+}

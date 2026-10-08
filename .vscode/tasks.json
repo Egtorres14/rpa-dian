@@ -1,0 +1,248 @@
+{
+  // Ctrl+Shift+P -> "Tasks: Run Task" muestra todos los comandos.
+  // Ctrl+Shift+B ejecuta la demo de la versión nueva y abre el PDF de resultados.
+  "version": "2.0.0",
+  "options": { "cwd": "${workspaceFolder}" },
+  "presentation": { "reveal": "always", "panel": "shared", "clear": true, "showReuseMessage": false },
+  "tasks": [
+    {
+      "label": "RPA · Instalar dependencias",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "instalar"],
+      "problemMatcher": []
+    },
+    {
+      "label": "RPA · Verificar entorno",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "verificar"],
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Nueva · Demo OCR + PDF de resultados",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "demo"],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Nueva · Pruebas unitarias",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "test"],
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Nueva · Saldo 2Captcha (no gasta)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "saldo"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Nueva · DIAN 1 factura (2Captcha ~USD 0,003)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "una"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Nueva · DIAN 10 facturas (2Captcha ~USD 0,03)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "lote"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Nueva · DIAN modo gratis (navegador visible)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "gratis"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Nueva · Extraer PDF de una carpeta",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "extraer", "${input:carpetaPdf}"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Nueva · Informe oficial de la prueba (PDF)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "informe"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Ver resultados en PDF (última ejecución)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "ver"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Ver resultados en PDF (elegir carpeta)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "ver", "${input:carpetaResultados}"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Abrir · CSV consolidado en cuadrícula (última ejecución)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "csv"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Abrir · CSV consolidado en cuadrícula (elegir carpeta)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "csv", "${input:carpetaCsv}"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Abrir · Documento de respuesta (Word)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "respuesta"],
+      "problemMatcher": []
+    },
+
+    {
+      "label": "GitHub · Ver ejecuciones de Actions",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "actions"],
+      "problemMatcher": []
+    },
+    {
+      "label": "GitHub · Detalle de una ejecución",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "actions", "${input:runId}"],
+      "problemMatcher": []
+    },
+    {
+      "label": "GitHub · Descargar resultados de una ejecución y ver PDF",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "actions", "${input:runId}", "--descargar"],
+      "problemMatcher": []
+    },
+    {
+      "label": "GitHub · Registro (log) de una ejecución",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "actions", "${input:runId}", "--log"],
+      "problemMatcher": []
+    },
+    {
+      "label": "GitHub · Abrir Actions en el navegador",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "actions", "--web"],
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Original · Demo OCR",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "original", "demo"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Original · Pruebas unitarias",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "original", "test"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Original · Saldo 2Captcha (no gasta)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "original", "saldo"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Original · DIAN 1 factura (2Captcha ~USD 0,003)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "original", "una"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Original · DIAN 10 facturas (2Captcha ~USD 0,03)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "original", "lote"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Original · DIAN modo gratis (navegador visible)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "original", "gratis"],
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Comparar · Ver cambios en el código (original vs nueva)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "cambios"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Comparar · Ejecutar ambas demos y comparar resultados",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "ambas"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Comparar · Resultados ya generados (original vs nueva demo)",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\scripts\\rpa.ps1", "comparar"],
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "runId",
+      "type": "promptString",
+      "description": "Número de la ejecución de GitHub Actions (columna ID de 'rpa actions')",
+      "default": "37100081712"
+    },
+    {
+      "id": "carpetaPdf",
+      "type": "promptString",
+      "description": "Carpeta con los PDF a procesar",
+      "default": "muestras\\pdf"
+    },
+    {
+      "id": "carpetaResultados",
+      "type": "pickString",
+      "description": "Carpeta de resultados",
+      "options": ["resultados_demo", "resultados_original_demo", "resultados_pago", "resultados_original_pago",
+                  "resultados_lote", "resultados_original_lote", "resultados_gratis", "resultados_extraer"],
+      "default": "resultados_demo"
+    },
+    {
+      "id": "carpetaCsv",
+      "type": "pickString",
+      "description": "Carpeta con facturas_consolidadas.csv",
+      "options": ["resultados_demo", "resultados_original_demo", "muestras", "resultados_pago", "resultados_original_pago",
+                  "resultados_lote", "resultados_original_lote", "resultados_gratis", "resultados_extraer"],
+      "default": "resultados_demo"
+    }
+  ]
+}

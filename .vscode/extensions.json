@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+    "tomoki1207.pdf",
+    "cweijan.vscode-office",
+    "mechatroner.rainbow-csv",
+    "ms-vscode.powershell"
+  ]
+}
