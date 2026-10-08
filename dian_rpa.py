@@ -861,8 +861,10 @@ def main() -> int:
             print(json.dumps({"clave_valida":True, "saldo_positivo":Decimal(str(result["balance"])) > 0,
                               "tareas_creadas":0, "consulta_s":round(time.perf_counter()-start,3)},indent=2))
             return 0
-        except (CaptchaError, OSError, ValueError) as exc:
+        except (CaptchaError, CaptchaRechazado, OSError, ValueError) as exc:
             parser.error(str(exc))
+        except (KeyError, ArithmeticError):
+            parser.error("Respuesta inesperada de 2Captcha: no incluye un saldo numérico.")
     if args.dpi < 100:
         parser.error("--dpi debe ser >= 100.")
     if not 1 <= args.ocr_workers <= 16:

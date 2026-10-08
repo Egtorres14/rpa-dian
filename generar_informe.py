@@ -26,6 +26,15 @@ def fecha_bogota(value):
     return datetime.fromisoformat(value).astimezone(timezone(timedelta(hours=-5))).strftime("%Y-%m-%d %H:%M:%S")
 
 
+def pct(value):
+    """Porcentaje o n/d cuando no hubo campos comparables (valor None en las métricas)."""
+    return "n/d" if value is None else f"{value} %"
+
+
+def nombre_factura(record):
+    return record.get("numero_factura") or record["archivo"]
+
+
 def crear_contenido(summary, records, repositorio, nota, adquisicion=None, optimizacion=None, modalidades=None):
     presentes = sum(r.get("campos_presentes", 0) for r in records)
     esperados = sum(r.get("campos_esperados", 0) for r in records)
@@ -68,7 +77,7 @@ def crear_contenido(summary, records, repositorio, nota, adquisicion=None, optim
             f"Páginas procesadas: {summary['paginas']}; con OCR: {summary['paginas_ocr']}; "
             f"filas de producto: {summary['filas_productos']}. Campos presentes: {presentes}/{esperados}. "
             f"Cobertura global: {100 * presentes / esperados if esperados else 0:.2f} %. "
-            f"Concordancia media por factura: {summary['concordancia_ocr_pdf_media_pct']} %; "
+            f"Concordancia media por factura: {pct(summary['concordancia_ocr_pdf_media_pct'])}; "
             f"campos comparados: {comparados}. Los campos vacíos en ambas fuentes no se cuentan como aciertos.",
         ]),
         ("Restricciones y calidad", [
@@ -197,14 +206,14 @@ def crear_pdf(path, sections, summary, records, adquisicion=None, modalidades=No
             story.append(Spacer(1, 14))
             rows = [["#", "Factura", "Estado", "Productos", "Cobertura", "Concordancia", "Extracción (s)" if adquisicion else "Total (s)"]]
             for i, r in enumerate(records, 1):
-                rows.append([i, r.get("numero_factura", r["archivo"]), r["estado"], r.get("productos", 0),
-                             f"{r.get('cobertura_campos_pct', 0)} %", f"{r.get('concordancia_ocr_pdf_pct', 'n/d')} %",
+                rows.append([i, nombre_factura(r), r["estado"], r.get("productos", 0),
+                             f"{r.get('cobertura_campos_pct', 0)} %", pct(r.get("concordancia_ocr_pdf_pct")),
                              f"{r['total_s']:.2f}"])
             story.append(tabla(rows, [22, 92, 61, 58, 81, 106, 90]))
         if index == 4:
             incidentes = [r for r in records if r["estado"] != "OK"]
             for r in incidentes:
-                mensaje = f"{r.get('numero_factura', r['archivo'])}: {r.get('error') or r.get('advertencias') or 'Revisar campos ausentes.'}"
+                mensaje = f"{nombre_factura(r)}: {r.get('error') or r.get('advertencias') or 'Revisar campos ausentes.'}"
                 story.append(Paragraph(escape(mensaje), styles["TextoInforme"]))
 
         if index == 6 and modalidades:
@@ -254,8 +263,8 @@ def main():
             lines += ["| # | Factura | Estado | Productos | Cobertura | Concordancia | Total (s) |",
                       "|---|---|---|---:|---:|---:|---:|"]
             for i, r in enumerate(records, 1):
-                lines.append(f"| {i} | {r.get('numero_factura', r['archivo'])} | {r['estado']} | {r.get('productos', 0)} | "
-                             f"{r.get('cobertura_campos_pct', 0)} % | {r.get('concordancia_ocr_pdf_pct', 'n/d')} % | {r['total_s']:.2f} |")
+                lines.append(f"| {i} | {nombre_factura(r)} | {r['estado']} | {r.get('productos', 0)} | "
+                             f"{r.get('cobertura_campos_pct', 0)} % | {pct(r.get('concordancia_ocr_pdf_pct'))} | {r['total_s']:.2f} |")
             consulta = adquisicion or summary
             lines += ["", f"Tiempo de esta ejecución: {summary['tiempo_total_s']} s. Tareas CAPTCHA de la ejecución "
                       f"integral registrada: {consulta['captcha_tareas_remotas']}. Coste reportado: "

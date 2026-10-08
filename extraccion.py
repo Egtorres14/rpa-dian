@@ -291,7 +291,7 @@ class OCR:
         if whitelist:
             command += ["-c", "tessedit_char_whitelist=" + whitelist]
         result = subprocess.run([*command, "tsv"], input=stream.getvalue(),
-                                capture_output=True, check=True, timeout=30, env=self._environment)
+                                capture_output=True, check=True, timeout=self.timeout, env=self._environment)
         words = self._leer_tsv(result.stdout.decode("utf-8", "replace"), 1.0)
         return " ".join(w.text for w in words), statistics.mean(w.confidence for w in words) if words else 0.0
 
