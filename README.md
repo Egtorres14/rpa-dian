@@ -26,12 +26,32 @@ python dian_rpa.py dian --captcha 2captcha --limite 1 --out resultados_pago
 
 El programa lee `.env` automáticamente. Para las diez facturas, quita
 `--limite 1`. La nueva verificación local descargó y procesó una factura en
-28,447 s, con dos tareas CAPTCHA y coste reportado de USD 0,00290.
+28,627 s, con dos tareas CAPTCHA y coste reportado de USD 0,00290.
 
 Si descargaste el proyecto desde GitHub, configura tu propia clave como se
 explica abajo. El repositorio público contiene el código, instrucciones y
 muestras; no incluye el `.env` privado de la entrega. También puedes probar
 gratis el OCR con `python dian_rpa.py extraer --demo`.
+
+## Atajos en VS Code
+
+Abre la carpeta en VS Code y usa la terminal integrada:
+
+```powershell
+.\rpa instalar        # .venv, dependencias, Chromium y comprobación de Tesseract
+.\rpa demo            # OCR de las diez muestras y abre RESULTADOS.pdf dentro de VS Code
+.\rpa csv             # abre facturas_consolidadas.csv de la última ejecución en cuadrícula
+.\rpa respuesta       # abre el documento de respuesta (.docx) dentro de VS Code
+.\rpa actions         # ejecuciones de GitHub Actions; con un ID: detalle, --descargar o --log
+.\rpa ayuda           # lista de comandos (una, lote, gratis, ver, informe, cambios...)
+.\rpa-original demo   # la versión entregada originalmente, sin cambios (carpeta original\)
+```
+
+Los mismos comandos están en **Terminal → Run Task**; `Ctrl+Shift+B` lanza la demo.
+Dentro de VS Code se ven los PDF con `tomoki1207.pdf`, y Word, Excel y CSV con
+`cweijan.vscode-office`. `.\rpa instalar` instala ambas extensiones si faltan. Las
+diferencias con la versión original se explican en [CAMBIOS.md](CAMBIOS.md) y se ven con
+`.\rpa cambios`.
 
 ## Instalación
 
