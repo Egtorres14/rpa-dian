@@ -1,0 +1,9 @@
+{
+  "playwright": "1.63.0",
+  "PyMuPDF": "1.28.2",
+  "pandas": "3.0.6",
+  "numpy": "2.5.3",
+  "pillow": "12.3.0",
+  "reportlab": "5.0.1",
+  "python": "3.12.10"
+}

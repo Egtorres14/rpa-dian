@@ -1,0 +1,102 @@
+{
+  "mediciones": [
+    {
+      "nombre": "Pago: lote integral",
+      "alcance": "Consulta, descarga y OCR de diez facturas",
+      "facturas": 10,
+      "tiempo_s": 322.119,
+      "tareas_2captcha": 20,
+      "coste_usd": "0.02900",
+      "estado": "9 OK, 1 REVISAR por código vacío",
+      "inicio_utc": "2026-10-03T03:04:12+00:00"
+    },
+    {
+      "nombre": "Pago: prueba actual",
+      "alcance": "Consulta, descarga y OCR de una factura",
+      "facturas": 1,
+      "tiempo_s": 28.627,
+      "tareas_2captcha": 2,
+      "coste_usd": "0.00290",
+      "estado": "OK",
+      "inicio_utc": "2026-10-03T03:30:08+00:00"
+    },
+    {
+      "nombre": "Gratuito asistido",
+      "alcance": "Portal con intervención si hace falta",
+      "facturas": null,
+      "tiempo_s": null,
+      "tareas_2captcha": 0,
+      "coste_usd": "0",
+      "estado": "Tiempo humano no medido en lote real"
+    },
+    {
+      "nombre": "Widget: Chromium",
+      "alcance": "Un intento sin proveedor ni intervención",
+      "facturas": 1,
+      "tiempo_s": 17.361,
+      "tareas_2captcha": 0,
+      "coste_usd": "0",
+      "estado": "No recibió token en 15 s; 0 PDF",
+      "inicio_utc": "2026-10-03T03:18:27+00:00"
+    },
+    {
+      "nombre": "Widget: Chrome",
+      "alcance": "Un intento sin proveedor ni intervención",
+      "facturas": 1,
+      "tiempo_s": 17.255,
+      "tareas_2captcha": 0,
+      "coste_usd": "0",
+      "estado": "No recibió token en 15 s; 0 PDF",
+      "inicio_utc": "2026-10-03T03:27:21+00:00"
+    },
+    {
+      "nombre": "Demo OCR: diez PDF",
+      "alcance": "Sólo punto 2, archivos incluidos, sin Internet",
+      "facturas": 10,
+      "tiempo_s": 65.128,
+      "tareas_2captcha": 0,
+      "coste_usd": "0",
+      "estado": "9 OK, 1 REVISAR por código vacío",
+      "inicio_utc": "2026-10-03T03:33:22+00:00"
+    }
+  ],
+  "api_verificada": {
+    "metodo": "getBalance",
+    "clave_valida": true,
+    "saldo_positivo": true,
+    "tareas_creadas_en_verificacion": 0
+  },
+  "detalle_tareas_prueba_pago": [
+    {
+      "tipo": "TurnstileTaskProxyless",
+      "estado": "resuelto",
+      "consultas_resultado": 2,
+      "coste_reportado_usd": "0.00145",
+      "tiempo_proveedor_s": 7,
+      "tiempo_cliente_s": 10.797
+    },
+    {
+      "tipo": "TurnstileTaskProxyless",
+      "estado": "resuelto",
+      "consultas_resultado": 1,
+      "coste_reportado_usd": "0.00145",
+      "tiempo_proveedor_s": 4,
+      "tiempo_cliente_s": 5.453
+    }
+  ],
+  "demo": {
+    "csv_identicos": 10,
+    "productos": 21,
+    "paginas": 20,
+    "concordancia_pct": 100.0,
+    "campo_vacio_fuente": "Código de HTFE-6599"
+  },
+  "restricciones": [
+    "Los tiempos corresponden a ejecuciones individuales en este equipo.",
+    "La demo sólo ejecuta el punto 2; no se compara como una descarga gratuita nueva del portal.",
+    "El modo gratuito asistido no garantiza resolver el CAPTCHA sin intervención.",
+    "Las pruebas de widget no descargaron PDF: su tiempo representa una espera fallida.",
+    "La diferencia entre tiempo del cliente y proveedor incluye sondeo, red y granularidad de timestamps.",
+    "El callback es una alternativa futura de servidor, sin una mejora de velocidad medida todavía."
+  ]
+}

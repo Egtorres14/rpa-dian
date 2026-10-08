@@ -1,0 +1,11 @@
+{
+  "_nota": "Formulario verificado contra el HTML real de catalogo-vpfe.dian.gov.co/User/SearchDocument y el aviso de descarga contra el HTML guardado en diagnostico/ (2026-10-02). Si algo falla, revisa resultados_dian/diagnostico/*.html y ajusta.",
+  "document_key": "#DocumentKey",
+  "search_nit": "#SearchDocumentNit",
+  "search_button": "#search-document-form button.search-document",
+  "errors": ".field-validation-error, .validation-summary-errors, .alert-danger, #errorModal.in .modal-body, #errorModal.show .modal-body",
+  "download": "form#postForm a.downloadLink, a.downloadLink, .downloadPDFUrl, a[href*='DownloadPDF' i], a:has-text('Descargar PDF'), button:has-text('Descargar PDF')",
+  "dialog": "div.bootbox.modal-download-info, .modal.in, .modal.show",
+  "download_nit": "input[name*='nit' i]:not([type='hidden'])",
+  "download_confirm": ".modal-footer button.btn-primary, button[data-bb-handler], button.btn-primary"
+}

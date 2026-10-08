@@ -1,0 +1,20 @@
+{
+  "ejecucion": "https://github.com/Egtorres14/rpa-dian/actions/runs/37100081712",
+  "fecha": "2026-10-03",
+  "modalidad": "dian",
+  "navegador": "Chromium con Xvfb",
+  "facturas": 1,
+  "ok": 1,
+  "revisar": 0,
+  "errores": 0,
+  "paginas": 2,
+  "productos": 1,
+  "tiempo_rpa_ocr_s": 30.85,
+  "tareas_captcha": 2,
+  "coste_reportado_usd": "0.00290",
+  "pdf_hash_verificado": true,
+  "pdf_abierto_y_cufe_comprobado": true,
+  "csv_igual_a_referencia": true,
+  "secretos_y_diagnosticos_excluidos": true,
+  "alcance": "Una factura nueva; no se ha medido el lote remoto de diez."
+}
